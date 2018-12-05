@@ -8,6 +8,9 @@
   > Informe de rendimentos
   > Cartão ponto
   ```
-  o PWeb foi desenvolvido pelos desenvolvedores:
+  O mesmo contem uma interface muito simples e de fácil entendimento para qualquer usuário, com um design responsívo, o PWeb tambem pode ser acessado de qualquer lugar atráves de um smartphone ou dispositivo móvel com acesso a internet atráves do aplicativo, disponibilizado na Google play.
+  o PWeb foi desenvolvido por:
   - Gabriel Cândido
   - Matheus Bazzo
+
+  
