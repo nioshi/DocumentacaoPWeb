@@ -16,4 +16,4 @@
 
   ### Tecnologias e linguagens utilizadas
   
-  O *front-end* da aplicação foi desenvolvido utilizando o framework do google `AngularJS 1.5.8` o 
+  O *front-end* da aplicação foi desenvolvido utilizando o framework do google `AngularJS 1.5.8`
