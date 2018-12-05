@@ -14,5 +14,5 @@
   - Gabriel Cândido
   - Matheus Bazzo
 
-  ######Tecnologias utilizadas
+  ### Tecnologias utilizadas
   
