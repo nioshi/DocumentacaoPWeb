@@ -59,7 +59,7 @@
   ```
   onde, *setting* é o formato do dado que será enviado e recebido, e o *data* é a variável que pode enviar uma informação ao back-end, nesse caso é nossas variaveis de configuração, e a mesma vai receber a resposta do *response*, essa resposta pode ser informações para serem utilizadas na view, ou apenas um "ok".
   
-  quando o *back-end* responder com sucesso, o *.success* é chamado e o mesmo seta a variavel ```$scope.PostDataResponse``` com o *data* e redireciona o usuário para a view principal através do ```$window.location.href = '/pweb'```, caso retorne um erro, o erro é mostrado na tela através do *.error*
+  quando o *back-end* responder com sucesso, o `.success` é chamado e o mesmo seta a variavel ```$scope.PostDataResponse``` com o *data* e redireciona o usuário para a view principal através do ```$window.location.href = '/pweb'```, caso retorne um erro, o erro é mostrado na tela através do `.error`
   
   ainda nesse sentido temos o **print.js** e o **salvarPDF.js** que são utilizados utilizados para imprimir ou salvar em pdf o *folha de pagamento*.
   
@@ -80,4 +80,41 @@
     }
  ```
  
- Como ja mostrado no código da configuração, a requisição é feita através de "." seguido do endereço dessa requisição no back-end que no caso da configuração é */dbconfig*, ficando: ```$http.post('./dbconfig', data, setting)```, no lado do back-end o endereço vai ser apenas */dbconfig* 
+ Como ja mostrado no código da configuração, a requisição HTTP é feita através de "." seguido do endereço dessa requisição no back-end que no caso da configuração é */dbconfig*, ficando: ```$http.post('./dbconfig', data, setting)```, no lado do back-end o endereço vai ser apenas */dbconfig*, a requisição pode ser POST ou GET, mas isso deve ser feito nos dois lado da aplicação, no `AngularJS` e no `PHP`, lembrando que a requisição é feita dessa forma na aplicação por causa da forma que o Silex usa as rotas, essa forma pode mudar de acordo com o framework utilizado, mais informações podem ser encontradas na documentação do [Silex 2.0](https://silex.symfony.com/doc/2.0/)
+ 
+ ### Back-end
+ 
+  #### PHP
+  
+  No back-end existe um arquivo *controller* para cada relatório, assim como para o login,para a administração e para o serviço windows.
+  
+  no `LoginController.php`, temos as lógicas para o login do usuario seja pela view do login padrão, ou seja pela plataforma da seniorX, assim como *logout*, e *mudarsenha*.
+  o PHP recebe a requisição do `front-end`(AngularJS) com as informações que foi informado na view de login, e as utiliza para buscar esse usuário que está pretendendo logar na aplicação, como a seguir:
+  ```
+  $sql = "SELECT USU_CODUSU, USU_SENUSU, USU_ALTSEN, USU_QTDTEN, 
+                 USU_BLOUSU, USU_EMPUSU
+            FROM USU_TUSUPOR, R034FUN
+           WHERE USU_CODUSU = ?
+             AND USU_EMPUSU = NUMEMP
+             AND USU_TIPUSU = TIPCOL
+             AND TIPCOL = 1
+             AND NUMCPF = USU_CODUSU
+             AND SITAFA <> 7";
+	
+  $stmt = $app['db']->prepare($sql);
+  $stmt->bindValue(1, $user);
+  $stmt->execute();
+  
+  $userData = $stmt->fetchAll();
+  ```
+   > `$sql` é a variavel que contem a linha do sql
+   
+   > `$stmt = $app['db']->prepare($sql);` envia o comando.
+   
+   > `$stmt->bindValue(1, $user);` substitui o caracter "?" na linha do `$sql`, onde 1 é a posição do caracter e o $user, é a variavel que irá substitui-lo.
+   
+   > `$stmt->execute();` executa todos esses parametros.
+   
+   > `$userData = $stmt->fetchAll();` recebe o retorno do SQL e o guarda em uma variável, nesse caso em específico ele recebe todos os parametros do select, por causo do método ` fetchAll();`, se quisessemos apenas uma varíavel do select poderiamos utilizar-lo assim: `fetchAll()[0]['Variavel desejada']` sendo, `variavel desejada` igual ao nome que está no `$sql`.
+   
+   
