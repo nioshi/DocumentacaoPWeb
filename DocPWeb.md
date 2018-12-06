@@ -25,3 +25,12 @@
 ### Front-end
 
 #### HTML
+
+  O HTML é a view da nossa aplicação, é onde é mostrado todas as informações que chegam do angularJS para gerar os relatórios, o HTML faz um submit ao AngularJS que trás as informações ao mesmo.
+  Exemplo de código para um botão:
+  ```
+  <div class="form-group">
+     <button type="submit" ng-disabled="userForm.$invalid" class="btn btn-lg btn-primary btn-block"/>Enviar</button>
+  </div>
+  ```
+  
