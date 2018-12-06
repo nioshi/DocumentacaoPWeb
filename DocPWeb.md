@@ -33,4 +33,4 @@
      <button type="submit" ng-disabled="userForm.$invalid" class="btn btn-lg btn-primary btn-block"/>Enviar</button>
   </div>
   ```
-  
+  Nesse trecho de código, podemos ver o *Bootstrap*: ```<div class="form-group">``` e o *AngularJS*: ```ng-disabled=``` trabalhando junto com o HTML, o bootstrap nesse trecho é utilizado para colocar o botão em uma div ja formatada pelo framework, e o anjularJS é utilizado para habilitar o botão apenas se todas as informações contidas nos campos submit estejam válidas. Todas essas funções podem se encontradas na documentação de cada framework.
