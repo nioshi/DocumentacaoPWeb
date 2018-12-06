@@ -16,6 +16,6 @@
 
   ### Tecnologias e linguagens utilizadas
   
- O *front-end* da aplicação foi desenvolvido utilizando o framework do google `AngularJS 1.5.8` para a linguagem JavaScript e o `Bootstrap` para o Html e CSS, para o *front-end* a aplicação faz uso do PHP para manipulação do banco de dados e o framework silex/symphony que faz a ligação entre o Angular e PHP com requisições HTTP(POST e GET).
+ O *front-end* da aplicação foi desenvolvido utilizando o framework do google `AngularJS 1.5.8` para a linguagem JavaScript e o `Bootstrap` para o Html e CSS, para o *back-end* a aplicação faz uso do PHP para manipulação do banco de dados e o framework silex/symphony que faz a ligação entre o Angular e PHP com requisições HTTP(POST e GET).
  
- Ainda no *front-end* existe o `Serviço windows` da aplicação desenvolvido com a linguagem C#, que facilita a comunicação com serviços web com o framework .NET, o serviço PWeb é utilizado para acessar o banco de dados no servidor senior, para garantir a integridade dos dados da versão da aplicação e tambem de módulos.
+ Ainda no *back-end* existe o `Serviço windows` da aplicação desenvolvido com a linguagem C#, que facilita a comunicação com serviços web com o framework .NET, o serviço PWeb é utilizado para acessar o banco de dados no servidor senior, para garantir a integridade dos dados da versão da aplicação e tambem de módulos.
