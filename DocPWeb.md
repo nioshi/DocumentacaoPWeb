@@ -33,4 +33,34 @@
      <button type="submit" ng-disabled="userForm.$invalid" class="btn btn-lg btn-primary btn-block"/>Enviar</button>
   </div>
   ```
-  Nesse trecho de código, podemos ver o *Bootstrap*: ```<div class="form-group">``` e o *AngularJS*: ```ng-disabled=``` trabalhando junto com o HTML, o bootstrap nesse trecho é utilizado para colocar o botão em uma div ja formatada pelo framework, e o anjularJS é utilizado para habilitar o botão apenas se todas as informações contidas nos campos submit estejam válidas. Todas essas funções podem se encontradas na documentação de cada framework.
+  Nesse trecho de código, podemos ver o *Bootstrap*: ```<div class="form-group">``` e o *AngularJS*: ```ng-disabled=``` trabalhando junto com o HTML, o bootstrap nesse trecho é utilizado para colocar o botão em uma div ja formatada pelo framework, e o angularJS é utilizado para habilitar o botão apenas se todas as informações contidas nos campos dentro do *form* estejam válidas. Todas essas funções podem se encontradas na documentação de cada framework.
+  
+#### AngularJS
+
+  Como ja explicado nesse documento, o angularJS é um framework construido pela Google para facilitar a comunicação do HTML com a linguagem JavaScript, deixando o codigo HTML mais limpo e de facil entendimento.
+  Começando com **config.js**, ele é utilizado para pegar as informações de configuração da view e enviar ao PHP para o mesmo escrever em um arquivo, para posteriormente utilizar essas mesmas configurações na aplicação, exemplo de código:
+  ```
+      var setting = {
+      headers : {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+      }
+    }
+
+    // post para a rota que cria o arquivo
+    $http.post('./dbconfig', data, setting)
+    .success(function (data, status, headers, setting){
+      $scope.PostDataResponse = data;
+      $window.location.href = '/pweb';
+    })
+    .error(function (data, status, header, setting){
+      $scope.ResponseDetails = "Erro: " + data ;
+    });
+  };
+  ```
+  onde, *setting* é o formato do dado que será enviado e recebido, e o *data* é a variável que pode enviar uma informação ao back-end, nesse caso é nossas variaveis de configuração, e a mesma vai receber a resposta do *response*, essa resposta pode ser informações para serem utilizadas na view, ou apenas um "ok".
+  
+  quando o *back-end* responder com sucesso, o *.success* é chamado e o mesmo seta a variavel ```$scope.PostDataResponse``` com o *data* e redireciona o usuário para a view principal através do ```$window.location.href = '/pweb'```, caso retorne um erro, o erro é mostrado na tela através do *.error*
+  
+  ainda nesse sentido temos o **print.js** e o **salvarPDF.js** que são utilizados utilizados para imprimir ou salvar em pdf o *folha de pagamento*.
+  
+  
