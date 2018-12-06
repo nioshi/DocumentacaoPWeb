@@ -88,8 +88,9 @@
   
   No back-end existe um arquivo *controller* para cada relatório, assim como para o login,para a administração e para o serviço windows.
   
-  no `LoginController.php`, temos as lógicas para o login do usuario seja pela view do login padrão, ou seja pela plataforma da seniorX, assim como *logout*, e *mudarsenha*.
-  o PHP recebe a requisição do `front-end`(AngularJS) com as informações que foi informado na view de login, e as utiliza para buscar esse usuário que está pretendendo logar na aplicação, como a seguir:
+  ##### LoginController
+  no `LoginController.php`, temos as lógicas para o login do usuario, seja pela view do login padrão, ou seja pela plataforma da senior, o SeniorX, assim como *logout*, e *mudarsenha*.
+  o PHP recebe a requisição do `front-end(AngularJS)` com as informações que foi informado na view de login, e as utiliza para buscar esse usuário que está pretendendo logar na aplicação,que será mostrado logo abaixo; Todas as informações recebidas pelo front-end através da variavel `data`, são pegas através de: ```$request->get('variavelDesejada')```, sendo `variavelDesejada` o mesmo nome da variavel no angularJS.
   ```
   $sql = "SELECT USU_CODUSU, USU_SENUSU, USU_ALTSEN, USU_QTDTEN, 
                  USU_BLOUSU, USU_EMPUSU
@@ -109,12 +110,92 @@
   ```
    > `$sql` é a variavel que contem a linha do sql
    
-   > `$stmt = $app['db']->prepare($sql);` envia o comando.
+   > `$stmt = $app['db']->prepare($sql);` atribui o comando à variavel `$stmt`.
    
    > `$stmt->bindValue(1, $user);` substitui o caracter "?" na linha do `$sql`, onde 1 é a posição do caracter e o $user, é a variavel que irá substitui-lo.
    
    > `$stmt->execute();` executa todos esses parametros.
    
-   > `$userData = $stmt->fetchAll();` recebe o retorno do SQL e o guarda em uma variável, nesse caso em específico ele recebe todos os parametros do select, por causo do método ` fetchAll();`, se quisessemos apenas uma varíavel do select poderiamos utilizar-lo assim: `fetchAll()[0]['Variavel desejada']` sendo, `variavel desejada` igual ao nome que está no `$sql`.
+   > `$userData = $stmt->fetchAll();` recebe o retorno do SQL e o guarda em uma variável, nesse caso em específico ele recebe todos os parametros do select em um array, por causa do método ` fetchAll();`, se quisessemos apenas uma varíavel do select poderiamos utilizar-lo assim: `fetchAll()[0]['Variavel desejada']` sendo, `variavel desejada` igual ao nome que está no `$sql`.
+   
+   A senha quando chega é criptografada: ```$password = base64_encode($request->get('password'));```, e enviada para o banco de dados, ou seja, não tem como saber qual é a senha desse usuário, para recuperar a mesma em caso de perda, o mesmo receberá uma senha temporária e logo após logar no PWeb, deverar mudar a mesma.
+   
+   A questão de campos data, é tratado diferente para cada banco, SQL ou Oracle, como segue nos códigos abaixo:
+   ```
+     $driver = $app['db']->getDriver();
+  if($driver == "oci8"){
+    $sql = "ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY'";
+    $app['db']->query($sql);
+  }
+  // se for SQL Server transforma em \Date() e deixa o Doctrine tratar
+  else if($driver == "sqlsrv"){
+    $accessData = date_create_from_format("d/m/Y",$accessData);
+  }
+  ```
+  
+  ##### ConfigController
+  
+   O configController.php é o responsável para escrever as configurações da aplicação em um arquivo como explicado anteriormente
+   ```
+     if($dbserver != "" && $dbuser != "" && $db != "" && $driver != ""){
+    $file = fopen("../app/config/dbvar.php","w");
+
+    $string = "<?PHP \$dbserver = '$dbserver'; \n \$dbuser = '$dbuser'; \n \$dbpassword = '$dbpassword'; \n \$db = '$db';\n \$driver = '$driver' \n ?>";
+
+    fwrite($file,$string);
+    fclose($file);
+  }
+  ```
+  e tambem para receber os módulos habilitados e desabilitados da aplicação para cada usuário.
+  
+  O C#, que será explicado mais para frente, envia uma string com informações dos módulos a um endereço URL, e o PHP, acessa esse mesmo endereço utilizando o [guzzlehttp](http://docs.guzzlephp.org/en/stable/) e recebe essa informação para utiliza-la para fazer uma condição lógica dentro dele, ele faz a comparação, guarda as informações dentro de um array de string de acordo com cada condição, e envia ao angularJS por meio de [JSON](http://www.json.org/), como pode ser visto no código simplificado:
+  ```
+  	$curl = curl_init();
+	// seta a url para onde será a requisição
+	curl_setopt($curl, CURLOPT_URL, 'http://localhost:12934/mod/');
+	// seta para receber a resposta em string
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	// Envia a requisição e salva a resposta
+	$response = curl_exec($curl);
+	// divide a informção em 3 strings novas
+	$modulos = explode(";", $response);
+
+	if($modulos[0] == 'sim'){
+		$moduloscaminho['folha'] = './holerite.html';
+	}else{
+		$moduloscaminho['folha'] = '';
+	}
+		return new Response(json_encode($moduloscaminho), 201);
+		// Fecha a requisição e limpa a memória
+		curl_close($curl);
+```
+   
+   ##### HoleriteController
+   
+   O HoleriteController é o responsável pela folha de pagamento, ele a principio é bem simples, ele recebe a requisição do `front-end`,  faz a busca das informações no banco de dados, igual ao exemplo do login, de acordo com o usuario e a empresa guardados na variável de sessão:```$app['session']->get('user')```, ```$app['session']->get('empresa')``` e os reenvia para o angularJS através de JSON para serem mostrados na view da aplicação em forma de divs, como no trecho de exemplo:
+   ```
+   						<div class="row">
+							<div class="col-md-5 col-sm-5">
+								<label for="Competencia">Mes/Ano</label>
+									<p>
+										[[holerite.competencia | date: 'MM/yyyy']]
+									</p>
+							</div>
+							<div class="col-md-5 col-sm-5">
+								<label for="Empresa">Empresa</label>
+								<p>
+									[[holerite.empresa.nomeEmpresa]]
+								</p>
+							</div>
+  ```
+  
+   a os campos data no Holerite são convertidos no formato que a aplicação possa entender:
+   ```
+   $calculo['competencia'] = $calculo['competencia']->format('m/Y');
+   $calculo['dataini'] = $calculo['dataini']->format('d/m/Y');
+   $calculo['datafi'] = $calculo['datafi']->format('d/m/Y');
+   ```
+   
+   ##### CartaoController e InformeController
    
    
