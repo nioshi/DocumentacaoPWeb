@@ -264,7 +264,7 @@
  
  ##### AdminController
  
-   Esse controller é utlizado para buscar as informações do usuario no banco para mostrar na tabela da view, e tambem para alterar os modulos conforme escolha do administrador, a uma pequena diferença no acesso ao banco, ja que o mesmo não é SQL e sim SQLite, apesar de diferente os comandos se tornam parecidos, mudando apenas a sintaxe:
+   Esse controller é utlizado para buscar as informações do usuario no banco para mostrar na tabela da view, e tambem para alterar os modulos conforme escolha do administrador, a uma pequena diferença no acesso ao banco, ja que o mesmo não é SQL e sim [SQLite](https://www.sqlite.org/docs.html), apesar de parecerem diferentes, os comandos se tornam parecidos mudando apenas a sintaxe:
    ```
   $newdados = json_decode($_POST["x"], false);
   $db = new PDO('sqlite:C://Users//User//Documents//Projetos//pweb//Atualizador.db');
@@ -295,4 +295,178 @@
   > `xmlhttp.open("POST", "gravardados", true);` abre a requisição informando a forma de envio(POST), e a informação enviada.
   
   > `xmlhttp.send("x=" + usuarios);` envia a informação, com um caractere de detecção de pacote o `x=`, para o PHP saber onde começa a informação do JSON no pacote recebido.
+  
+  ##### AtualizadorController
+  
+   esse controllador trabalha exclusivamento com o C# e os serviço windows e fica no servidor Senior, nele temos:
+   - Verificar a versão do cliente e guardar a mesma no banco SQLite
+   - Enviar o .zip com a versão nova caso esteja desatualizado
+   - Enviar os modulos do usuario para o C#
+   
+   A forma de verificar a versão é bem simples, ele recebe as informações do usuario:
+   ```
+    $nome = $_POST['user'];
+    $versao = $_POST['version'];
+    $datas = $_POST['datas'];
+   ```
+   Ele compara o nome do mesmo que no banco é `unique`, se ja existir ele apenas faz um `Update` para atualizar a versão e data do acesso, caso o nome não existir, ele faz um `Insert` desse novo usuário:
+   ```
+     // CRIA O BD DO SQLite obs: precisa ser o caminho completo
+  $db = new PDO('sqlite:C://Users//User//Documents//Projetos//pweb//Atualizador.db'); 
+  //CONSULTA O BANCO PARA VER SE JA EXISTE O CLIENTE
+  $consulta = $db->prepare("SELECT nome,versao FROM VersaoClientes WHERE nome = :nomes");
+  $consulta->bindParam(':nomes', $nome, PDO::PARAM_STR, 50);
+  $consulta->execute();
+  $result = $consulta->fetchAll();
 
+  foreach ($result as $retorno) {
+  $retorno['nome'];
+  $retorno['versao'];
+  }
+  ```
+  Se a versão estiver desatualizada, o mesmo chama a rota `/baixar` o qual retorna um .zip com a versão atualizada para o C# que está no computador do cliente, o C# ja faz o trabalho de descompactar os arquivos na pasta da aplicação PWeb:
+  ```
+  $app->post('/baixar', function (Request $request) use ($app) {
+
+  if(file_exists("C:/Users/User/Documents/Projetos/pweb/web.zip")){
+	  //LIMPA O BUFFER DO PHP PARA NÂO ENVIAR O ARQUIVO CORROMPIDO
+	  ob_clean();
+    flush();
+
+	  return $app->sendFile('C:/Users/User/Documents/Projetos/pweb/web.zip', 200, array('Content-Type' => "application/x-zip"));
+  }
+  else{
+    return new Response("Arquivo version não existe!", 500);
+  }
+});
+```
+ Atenção para as linhas `ob_clean();` e `flush();`, pois sem elas, o PHP enviará lixo de mémoria com o .zip, e quando o pacote chegar no cliente o binário do arquivo está corrompido, pois terá informações no binário que não deveria estar junto.
+
+ Lembrando que para o PHP conseguir enviar ou receber um arquivo pela rede dois parametros devem ser mudados logo no inicio do arquivo .PHP:
+ ```
+ ini_set('upload_max_filesize', '20M');
+ ini_set('post_max_size', '20M');
+ ```
+ E ainda temos a rota do `modulose`, o qual pega os modulos contidos no banco de dados do servidor da Senior, e os envia para o serviço windows do cliente:
+ ```
+  //CRIA O BD DO SQLite obs: precisa ser o caminho completo
+  $db = new PDO('sqlite:C://Users//User//Documents//Projetos//pweb//Atualizador.db'); 
+  //CONSULTA O BANCO PARA VER OS MODULOS DO CLIENTE
+  $nome = $_POST['user'];
+  $consulta = $db->prepare("SELECT modFolha,modInforme,modCartao FROM VersaoClientes WHERE nome = :nomes");
+  $consulta->bindParam(':nomes', $nome, PDO::PARAM_STR, 50);
+  $consulta->execute();
+  $result = $consulta->fetchAll();
+
+  foreach ($result as $retorno) {
+  $retorno['modFolha'];
+  $retorno['modInforme'];
+  $retorno['modCartao'];
+  }
+  return new Response(json_encode($retorno), 201);
+  ```
+ #### Serviço windows
+ 
+ ##### C#
+ 
+   O serviço windows foi escrito com C# pois a linguagem facilita muito quando a questão é comunicação WEB e HTTP, graças a o framework da microsoft o .NET.
+   
+   A comunicação com o PHP é utilizando [webClient](https://docs.microsoft.com/pt-br/dotnet/api/system.net.webclient?view=netframework-4.7.2), o qual possibilita o envio e recebimento de informações por URL.
+   
+   É o C# que faz as requisições para o AtualizadorController ja explicado acima, ele envia as informações do cliente que estão em um arquivo, atraves de `NameValueCollection` para o PHP:
+   ```
+    NameValueCollection version = new NameValueCollection();
+                version["user"] = user[0];
+                version["version"] = versions[2];
+                version["datas"] = date;
+                versions[2] = versions[2].Trim();
+
+                using (var client = new WebClient())
+                {
+                    result = client.UploadValues(URLEnviar, version);
+                    resultasd = Encoding.UTF8.GetString(result);
+                    resultasd = resultasd.Substring(3);
+                }
+  ```
+  o PHP retorna se a versão está atualizada ou desatualizada, se estiver atualizada nada acontece e apenas um LOG é gerado, se estiver desatualizada o C# torna a fazer uma requisição mas agora para o `/baixar`, que o retornará com um arquivo .zip, o c# irá receber o mesmo, deletar a pasta da aplicação antiga, e instalar os arquivos da nova versão.
+  
+  O C# recebe o .zip através de binário:
+  ```
+  result = client.UploadValues(URLBaixar, mensagem);
+     //LOCAL ONDE ARMAZENA O .ZIP
+     FileStream arquivoBaixado = new FileStream("C://Users//User//Documents//Projetos//novaversao.zip", FileMode.OpenOrCreate);
+      BinaryWriter binarioRecebido = new BinaryWriter(arquivoBaixado);
+      binarioRecebido.Write(result);
+ ```
+  no método `sendResponse` existe a variável `acessarbd` o qual controla se o C# irá buscar no banco de dados do servidor da Senior ou apenas de um arquivo no computador do cliente, para não ficar fazendo requisições desnecessárias para o banco de dados. O arquivo é alimentado quando o C# faz requisição no banco de dados 1 vez por dia.
+  
+  > acessarbd = 0
+  
+  ```
+  using (var client = new WebClient())
+                    {
+                        result = client.UploadValues(URLreceber, version);
+                        resultado = Encoding.UTF8.GetString(result);
+                        resultado = resultado.Substring(3);
+                        JObject json = JObject.Parse(resultado);
+                        dynamic results = JsonConvert.DeserializeObject<dynamic>(resultado);
+                        modulos["modulos"] = results.modFolha + ";" + results.modInforme + ";" + results.modCartao;
+                        //ESCREVE NO ARQUIVO DPS DE RECEBER DO BANCO
+                        using (StreamWriter writer = new StreamWriter("C://Users//User//Documents//Projetos//teste//modulos.txt"))
+                        {
+                            writer.WriteLine(results.modFolha + ";" + results.modInforme + ";" + results.modCartao);
+                        }
+                        acessarbd = 1;
+                        return modulos["modulos"];
+              }
+```
+
+> acessarbd = 1
+
+```
+                  // LE O ARQUIVO E ENVIA PARA O PHP
+                    using (StreamReader ler = new StreamReader("C://Users//User//Documents//Projetos//teste//modulos.txt"))
+                    {
+                        modulos["modulos"] = ler.ReadLine();
+                    }
+
+                    return modulos["modulos"];
+```
+
+para baixar o .zip segue a mesma lógica de variável, e as duas variáveis são resetadas quando:
+- O timer de 24 horas estoura
+- O computador é desligado
+
+```
+        public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
+        {
+            baixarArquivo();
+            acessarbd = 0;
+            baixarversao = 0;
+        }
+
+        protected override void OnShutdown()
+        {
+            base.OnShutdown();
+            baixarversao = 0;
+            acessarbd = 0;
+        }
+```
+
+Dentro do método `OnStart(string[] args)` é onde fica o loop do serviço, enquanto o serviço estiver rodando no computador do cliente, esse método estará sendo executado, dentro dele é escrito o LOG de start do serviço, assim como é criado o [WebServer](https://developer.mozilla.org/pt-BR/docs/Learn/Common_questions/o_que_e_um_web_server) e iniciado o mesmo: `var ws = new WebServer(SendResponse, "http://localhost:12934/mod/");`, com a função que o webServer irá utilizar, e a URL onde o mesmo irá acessar.
+
+Nesse método tambem temos o timer, o qual é utilizado para caso o computador não seja desligado, quando o mesmo estoura, as flags são resetadas, e a requisição de versão é feita, o código completo pode ser visto logo abaixo:
+```
+            var ws = new WebServer(SendResponse, "http://localhost:12934/mod/");
+            ws.Run();
+            mainT = new Thread(start: ws.Run);
+            mainT.Start();
+            System.Timers.Timer timer = new System.Timers.Timer();
+            timer.Elapsed += new ElapsedEventHandler(OnTimer);
+            timer.Interval = 86436000;
+            timer.Enabled = true;
+            timer.Start();
+```
+Tambem é utilizado thread para não ocorrer conflito em um evento muito raro onde vários usuários fazem requisição ao WebServer, se tiver apenas uma Thread, apenas 1 cliente por vez poderia acessar o banco de dados.
+
+ 
