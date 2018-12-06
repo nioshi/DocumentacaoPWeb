@@ -207,7 +207,7 @@
    
    ##### CartaoController e InformeController
    
-   O controller do cartao e do informe tem funções bem parecidas, o que diferencia um do outro é a URL de gestão que será acessa através do comando: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, para o cartão ponto, e para o informe: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, através de webServices, e a variável `$arguments`, para cada um tambem tem seu próprio array com as informações que irão aparecer no PDF gerado:
+   O controller do cartao e do informe tem funções bem parecidas, o que diferencia um do outro é a URL de gestão que será acessada através do comando: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, para o cartão ponto, e para o informe: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, através de webServices, e a variável `$arguments`, para cada um tambem tem seu próprio array com as informações que irão aparecer no PDF gerado:
    > Cartão
    
    ```
@@ -298,7 +298,7 @@
   
   ##### AtualizadorController
   
-   esse controllador trabalha exclusivamento com o C# e os serviço windows e fica no servidor Senior, nele temos:
+   esse controllador trabalha exclusivamente com o C# e o serviço windows e fica no servidor Senior, nele temos:
    - Verificar a versão do cliente e guardar a mesma no banco SQLite
    - Enviar o .zip com a versão nova caso esteja desatualizado
    - Enviar os modulos do usuario para o C#
