@@ -35,6 +35,8 @@
   ```
   Nesse trecho de código, podemos ver o *Bootstrap*: ```<div class="form-group">``` e o *AngularJS*: ```ng-disabled=``` trabalhando junto com o HTML, o bootstrap nesse trecho é utilizado para colocar o botão em uma div ja formatada pelo framework, e o angularJS é utilizado para habilitar o botão apenas se todas as informações contidas nos campos dentro do *form* estejam válidas. Todas essas funções podem se encontradas na documentação de cada framework.
   
+  Para os relatórios, o usuário terá uma view, que o mesmo escolherá a empresa e a competência para qual deseja gerar o relátorio.
+  
 #### AngularJS
 
   Como ja explicado nesse documento, o angularJS é um framework construido pela Google para facilitar a comunicação do HTML com a linguagem JavaScript, deixando o codigo HTML mais limpo e de facil entendimento.
@@ -174,22 +176,22 @@
    
    O HoleriteController é o responsável pela folha de pagamento, ele a principio é bem simples, ele recebe a requisição do `front-end`,  faz a busca das informações no banco de dados, igual ao exemplo do login, de acordo com o usuario e a empresa guardados na variável de sessão:```$app['session']->get('user')```, ```$app['session']->get('empresa')``` e os reenvia para o angularJS através de JSON para serem mostrados na view da aplicação em forma de divs, como no trecho de exemplo:
    ```
-   						<div class="row">
-							<div class="col-md-5 col-sm-5">
-								<label for="Competencia">Mes/Ano</label>
-									<p>
-										[[holerite.competencia | date: 'MM/yyyy']]
-									</p>
-							</div>
-							<div class="col-md-5 col-sm-5">
-								<label for="Empresa">Empresa</label>
-								<p>
-									[[holerite.empresa.nomeEmpresa]]
-								</p>
-							</div>
+   <div class="row">
+	<div class="col-md-5 col-sm-5">
+		<label for="Competencia">Mes/Ano</label>
+			<p>
+				[[holerite.competencia | date: 'MM/yyyy']]
+			</p>
+	</div>
+	<div class="col-md-5 col-sm-5">
+		<label for="Empresa">Empresa</label>
+			<p>
+				[[holerite.empresa.nomeEmpresa]]
+			</p>
+	</div>
   ```
   
-   a os campos data no Holerite são convertidos no formato que a aplicação possa entender:
+   Os campos data no Holerite são convertidos no formato que a aplicação possa entender:
    ```
    $calculo['competencia'] = $calculo['competencia']->format('m/Y');
    $calculo['dataini'] = $calculo['dataini']->format('d/m/Y');
@@ -198,4 +200,57 @@
    
    ##### CartaoController e InformeController
    
+   O controller do cartao e do informe tem funções bem parecidas, o que diferencia um do outro é a URL de gestão que será acessa através do comando: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, para o cartão ponto, e ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, através de webServices, e a variável `$arguments`, para cada um tambem tem seu próprio array com as informações que irão aparecer no PDF gerado:
+   > Cartão
    
+   ```
+   "prEntrada" => "<EDatInR=$dataini>"
+        .  "<EDatFiR=$datafim>"
+        .  "<EMarAfa='S'>"
+	.  "<EMarFol='S'>"
+	.  "<ELisDem='N'>"
+        .  "<EAbrGPe='N'>"
+	.  "<EAbrEmp=$empresa>"
+        .  "<EAbrCad=$user>",
+   ```
+   
+   > informe
+   
+   ```
+    "prEntrada" => "<ENumCpf=$user>"
+       .  "<EAnoBase=$ano>"
+       .  "<ELisAut=1>",
+   ```
+					    
+  O PHP retorna as informações ao AngularJS, que cria um PDF para visualização das informações:
+  ```
+      .success(function (data, status, headers, setting){
+      // Decodifica string em base64 retira o espaço para compatibilidade
+      var binary = atob(data.replace(/\s/g, ''));
+      var len = binary.length;
+      var buffer = new ArrayBuffer(len);
+      var view = new Uint8Array(buffer);
+      for (var i = 0; i < len; i++) {
+          view[i] = binary.charCodeAt(i);
+      }
+    
+      // Cria o blob especificando o mime-type, caso contrário somente o 
+      // Chrome trata corretamente
+      var newBlob = new Blob([view], {type: "application/pdf"})
+    
+      // Compatibilidade com o I.E. Não permite que utilizar um blob como href
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(newBlob);
+        return;
+      } 
+      
+      // Outros browsers: 
+      // Cria o blob como URL
+      var data_blob = window.URL.createObjectURL(newBlob);
+      
+      //Abre a janela
+
+	  //foi usado o parametro _self, pois era o unico que abria janela no google chrome.
+      newWindow.open(data_blob,"_self");
+ ```
+ Como segue no código acima, ele recebe as informações do back-end, e os converte para pdf, e abre uma janela com o PDF gerado do relatório, tanto para o cartão tanto para o informe.
