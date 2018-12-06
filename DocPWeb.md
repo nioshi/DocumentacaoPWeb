@@ -63,4 +63,21 @@
   
   ainda nesse sentido temos o **print.js** e o **salvarPDF.js** que são utilizados utilizados para imprimir ou salvar em pdf o *folha de pagamento*.
   
+  entrando nos *modules*, temos os arquivos .JS que cuidam da parte de requisição dos relatórios, parte administrativa e da interface do menu da aplicação. Todos seguem a mesma lógica, fazer uma requisição ao back-end(PHP), enviar os dados necessários e esperar um response com as informações que serão utilizadas para um fim.
   
+  Essas informações são utilizadas para serem mostradas na view da aplicação, exemplo: ```ng-src="data:image/png;base64,[[logo.logemp]]```, nesse caso é mostrado o logo da empresa na Folha de pagamento, onde a informação da logo é guardada em uma variável como no exemplo abaixo:
+  ```
+     .success(function (data, status, headers, setting){
+      $scope.logo = angular.fromJson(data);
+      ngProgress.complete();
+    })
+  ```
+  ou ainda, para fazer uma comparação lógica dentro do próprio JS, como segue abaixo:
+  ```
+      if($scope.quantidadeContratos > 1){
+      $scope.contratos = angular.fromJson(data).contratos;  
+	  
+    }
+ ```
+ 
+ Como ja mostrado no código da configuração, a requisição é feita através de "." seguido do endereço dessa requisição no back-end que no caso da configuração é */dbconfig*, ficando: ```$http.post('./dbconfig', data, setting)```, no lado do back-end o endereço vai ser apenas */dbconfig* 
