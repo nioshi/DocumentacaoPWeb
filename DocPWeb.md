@@ -37,6 +37,13 @@
   
   Para os relatórios, o usuário terá uma view, que o mesmo escolherá a empresa e a competência para qual deseja gerar o relátorio.
   
+  Existe tambem a view de Administrador, onde o mesmo pode:
+  
+  - Adicionar um novo usuário.
+  - Remover um usuário.
+  - Ver informações do usuário.
+  - Alterar módulos de cada usuário.
+  
 #### AngularJS
 
   Como ja explicado nesse documento, o angularJS é um framework construido pela Google para facilitar a comunicação do HTML com a linguagem JavaScript, deixando o codigo HTML mais limpo e de facil entendimento.
@@ -200,7 +207,7 @@
    
    ##### CartaoController e InformeController
    
-   O controller do cartao e do informe tem funções bem parecidas, o que diferencia um do outro é a URL de gestão que será acessa através do comando: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, para o cartão ponto, e ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, através de webServices, e a variável `$arguments`, para cada um tambem tem seu próprio array com as informações que irão aparecer no PDF gerado:
+   O controller do cartao e do informe tem funções bem parecidas, o que diferencia um do outro é a URL de gestão que será acessa através do comando: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, para o cartão ponto, e para o informe: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, através de webServices, e a variável `$arguments`, para cada um tambem tem seu próprio array com as informações que irão aparecer no PDF gerado:
    > Cartão
    
    ```
@@ -254,3 +261,38 @@
       newWindow.open(data_blob,"_self");
  ```
  Como segue no código acima, ele recebe as informações do back-end, e os converte para pdf, e abre uma janela com o PDF gerado do relatório, tanto para o cartão tanto para o informe.
+ 
+ ##### AdminController
+ 
+   Esse controller é utlizado para buscar as informações do usuario no banco para mostrar na tabela da view, e tambem para alterar os modulos conforme escolha do administrador, a uma pequena diferença no acesso ao banco, ja que o mesmo não é SQL e sim SQLite, apesar de diferente os comandos se tornam parecidos, mudando apenas a sintaxe:
+   ```
+  $newdados = json_decode($_POST["x"], false);
+  $db = new PDO('sqlite:C://Users//User//Documents//Projetos//pweb//Atualizador.db');
+  $i = 0;
+  while($newdados[$i] != null){
+  $consulta = $db->prepare("UPDATE VersaoClientes SET modFolha = :modF, modInforme = :modI, modCartao = :modC WHERE nome = :names ");
+  $consulta->bindParam(':modF', $newdados[$i]->modFolha, PDO::PARAM_STR, 50);
+  $consulta->bindParam(':modI', $newdados[$i]->modInforme, PDO::PARAM_STR, 50);
+  $consulta->bindParam(':modC', $newdados[$i]->modCartao, PDO::PARAM_STR, 50);
+  $consulta->bindParam(':names', $newdados[$i]->nome, PDO::PARAM_STR, 50);
+  $consulta->execute();
+  $i = $i + 1;
+  }
+  ```
+  A diferença do recebimento desse código dos demais ja mostrados, é que em vez do PHP enviar JSON, ele está recebendo, assim a forma de recebimento é um pouco diferente, como é visto na linha: `$newdados = json_decode($_POST["x"], false);`, sendo o envio do angularJS tambem diferente, nesse caso:
+  ```
+  $scope.GravarDados = function(){
+      usuarios = JSON.stringify($scope.usuario);
+      xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("POST", "gravardados", true);
+      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xmlhttp.send("x=" + usuarios);
+    };
+ ```
+  onde:
+  > `usuarios = JSON.stringify($scope.usuario);` transforma a informação em JSON
+  
+  > `xmlhttp.open("POST", "gravardados", true);` abre a requisição informando a forma de envio(POST), e a informação enviada.
+  
+  > `xmlhttp.send("x=" + usuarios);` envia a informação, com um caractere de detecção de pacote o `x=`, para o PHP saber onde começa a informação do JSON no pacote recebido.
+
