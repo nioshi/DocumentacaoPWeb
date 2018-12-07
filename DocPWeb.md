@@ -130,12 +130,19 @@
    A senha quando chega é criptografada: ```$password = base64_encode($request->get('password'));```, e enviada para o banco de dados, ou seja, não tem como saber qual é a senha desse usuário, para recuperar a mesma em caso de perda, o mesmo receberá uma senha temporária e logo após logar no PWeb, deverar mudar a mesma.
    
    A questão de campos data, é tratado diferente para cada banco, SQL ou Oracle, como segue nos códigos abaixo:
+   
+   > Oracle
+   
    ```
      $driver = $app['db']->getDriver();
   if($driver == "oci8"){
     $sql = "ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY'";
     $app['db']->query($sql);
   }
+  ```
+  > SQL
+  
+  ```
   // se for SQL Server transforma em \Date() e deixa o Doctrine tratar
   else if($driver == "sqlsrv"){
     $accessData = date_create_from_format("d/m/Y",$accessData);
