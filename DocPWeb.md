@@ -558,6 +558,6 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
    - O caminho físico deverá ser `pweb > web`, que é a pasta na qual o endereço irá acessar, ou seja a pasta da aplicação PWeb.
    - O "Conectar como..." deve ser o usuário da máquina, selecione o check-box `Usuário específico`, depois `Definir...`, insira: Nome de usuário, e a senha da máquina e `Ok`, clique em: `Testar Configurações` se estiver tudo certo clique em `Ok`.
    
-  Agora a aplicação web está devidamente configurada, para acessar a página abra o navegador web, e digite `http://localhost/"nome do alias"`, sem aspas.
+  Agora a aplicação web está devidamente configurada, para acessar a página abra o navegador web, e digite `http://localhost/nome do diretório virtual`.
   
   > OBS: Na documentação é levado em consideração que o Banco de dados, SQL ou Oracle, ja está configurado e rodando na máquina, assim como as configurações do IIS.
