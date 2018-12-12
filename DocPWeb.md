@@ -476,4 +476,74 @@ Nesse método tambem temos o timer, o qual é utilizado para caso o computador n
 ```
 Tambem é utilizado thread para não ocorrer conflito em um evento muito raro onde vários usuários fazem requisição ao WebServer, se tiver apenas uma Thread, apenas 1 cliente por vez poderia acessar o banco de dados.
 
+## Instalações
+
+### Front-end
+
+#### AngularJS
+ Para utilizar o AngularJS é bem simples, deve-se entrar no site oficial do [angular](https://angularjs.org/) e fazer o download da versão desejada; o Angular redirecionará para uma página como [essa](https://code.angularjs.org/1.5.8/angular.min.js), que conterá o código-fonte para ser utilizado no projeto, deve-se copiar esse codigo-fonte e colar em um arquivo chamado `angular.min.js`, o arquivo deve ser adicionado no diretório da aplicação - uma boa prática é deixar todos os arquivos .JS em uma única pasta - para chamar o script no projeto, deve ser utilizar:
+ ```
+ <script src="js/angular.min.js"></script>
+ ```
+ esse código segue para os outros script javascript.
  
+ #### Bootstrap
+  o Bootstrap oferece três formas de download e uma chamada CDN(essa em questão não precisa de download), para utilizar o CDN basta usar o seguinte código nos arquivos html:
+  ```
+<!-- Última versão CSS compilada e minificada -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Tema opcional -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Última versão JavaScript compilada e minificada -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  ```
+  
+  No PWeb é utilizada a 1ª opção de download, quando clicar em download irá baixar um .zip no computador, dentro desse .zip está compactados os arquivos do `.js`, `css` e do `fonts`, basta pegar esses arquivos e colocar no diretório da aplicação, novamente, uma boa prática é usar pastas com o mesmo nome(js,css,fonts).
+  
+  Para chamar esses arquivos na aplicação:
+  > js
+  ```
+  <script src="js/bootstrap.min.js"></script>
+  ```
+  > CSS
+  ```
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  ```
+  
+  ### back-end
+  
+  #### C#
+  
+  Para o C# foi utilizado o visual studio IDE da Microsoft pois com ele é possivel adicionar plugins à aplicação, ele pode ser baixado nesse [link](https://visualstudio.microsoft.com/).
+  
+  Com o Visual studio, podemos escolher quais pacotes de desenvolvimento queremos de acordo com nossa aplicação; No PWeb necessítamos dos seguintes pacotes de desenvolvimento:
+   - Desenvolvimento para desktop com .NET
+   - ASP.NET e desenvolvimento Web
+   - Processamento e armazenamentos de dados.
+   
+  Depois de instalado o visual Studio, cria-se um novo projeto "Serviço windows", para entender como funcionam acesse [Dcoumentação serviços windows](https://docs.microsoft.com/pt-br/dotnet/framework/windows-services/walkthrough-creating-a-windows-service-application-in-the-component-designer), nesse projeto se deve importar 2 pacotes NuGet:
+  - JSON
+  - Newtonsoft.json
+  
+  Esses pacotes são usados para o C# receber e entender pacotes `JSON`, ja que o mesmo não entende nativamente.
+  
+  #### SQLite
+  
+  O SQLite do PWeb utiliza o SQLiteStudio, essa IDE facilita muito a criação do banco de dados SQLite, abre-se o programa, na barra de menu seleciona-se `Database` e depois `Add a database`, seleciona-se uma pasta onde ficará o arquivo.db e pronto; Com isso ja é possivel alimentar esse banco, manualmente, ou com scripts.
+  
+  #### Silex
+  
+  o Silex foi baixado usando o composer com o comando:
+  ```
+  composer require silex/silex "^2.0"
+  ```
+  
+  Depois é só chamar o mesmo no arquivo PHP que utilizará ele com o código:
+  ```
+  use Symfony\Component\HttpFoundation\Response;
+  use Symfony\Component\HttpFoundation\Request;
+  ```
+  
+  
