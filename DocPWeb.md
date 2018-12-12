@@ -514,6 +514,12 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   
   ### back-end
   
+  #### PHP
+  
+   O PHP para Windows pode ser baixado nesse [link](https://windows.php.net/download/), após baixar o .zip do mesmo, descompacta-se os arquivos em uma pasta no computador, exemplo: `C:\Program Files/php`, depois devemos colocar essa pasta em "PATH", para isso: ` botão windows + Pause Break` -> `Configurações avançadas do sistema` -> `Variáveis de ambiente`, selecione `Path` e clique em `Editar...` clique em `novo` e adicione o caminho do php, neste caso: `C:\Program Files/php`. depois é nescessário reiniciar o computador para a variavel ser gravada.
+   
+   Pode-se ver o php entrado no prompt de comando(CMD) e digitando `php -v`.
+  
   #### C#
   
   Para o C# foi utilizado o visual studio IDE da Microsoft pois com ele é possivel adicionar plugins à aplicação, ele pode ser baixado nesse [link](https://visualstudio.microsoft.com/).
