@@ -540,10 +540,23 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   composer require silex/silex "^2.0"
   ```
   
-  Depois é só chamar o mesmo no arquivo PHP que utilizará ele com o código:
+  Depois é só chamar o mesmo no arquivo PHP que utilizará ele, com o código:
   ```
   use Symfony\Component\HttpFoundation\Response;
   use Symfony\Component\HttpFoundation\Request;
   ```
   
+   > OBS: O Silex 2.0 utilizado no PWeb foi descontinuado.
   
+  ## Local de testes
+  
+  Os testes do PWeb são feito na maquina local utilizando o Gerenciador de serviços da internet(IIS) do Windows.
+  
+  Com o IIS ja devidamente configurado, devemos clicar com o botão direito em `Sites > Default Web Site` e ir em `Adiciona diretório virtual`.
+  
+  > O campo "alias" é o nome do diretório, o qual será usado no endereço do navegador web para acessar à aplicação.
+  > O caminho físico deverá ser `pweb > web`, que é a pasta na qual o endereço irá acessar, ou seja a pasta da aplicação PWeb.
+  > O "Conectar como..." deve ser o usuário da máquina, selecione o check-box `Usuário específico`, depois `Definir...`, insira: Nome de usuário, e a senha da máquina e `Ok`, clique em: `Testar Configurações` se estiver tudo certo clique em `Ok`.
+  Agora a aplicação web está devidamente configurada, para acessar a página abra o navegador web, e digite `http://localhost/"nome do alias"`, pronto.
+  
+  > OBS: Na documentação é levado em consideração que o Banco de dados, SQL ou Oracle, ja está configurado e rodando na máquina, assim como as configurações do IIS.
