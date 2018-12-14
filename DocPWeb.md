@@ -547,10 +547,10 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
 />
 
 ## Instalações
-<div id='id3'
+<div id='id3'/>
 
 ### Front-end
-<div id='id3.1'
+<div id='id3.1'/>
 
 #### AngularJS
 <div id='id3.1.1'
@@ -591,8 +591,7 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   ```
   
   />
-  />
-  
+
   ### back-end
   <div id='id3.2'
   
