@@ -139,7 +139,7 @@
   No back-end existe um arquivo *controller* para cada relatório, assim como para o login,para a administração e para o serviço windows.
   
   ##### LoginController
-  <div id='id2.2.1.1
+  <div id='id2.2.1.1'
   
   no `LoginController.php`, temos as lógicas para o login do usuario, seja pela view do login padrão, ou seja pela plataforma da senior, o SeniorX, assim como *logout*, e *mudarsenha*.
   o PHP recebe a requisição do `front-end(AngularJS)` com as informações que foi informado na view de login, e as utiliza para buscar esse usuário que está pretendendo logar na aplicação,que será mostrado logo abaixo; Todas as informações recebidas pelo front-end através da variavel `data`, são pegas através de: ```$request->get('variavelDesejada')```, sendo `variavelDesejada` o mesmo nome da variavel no angularJS.
@@ -194,7 +194,7 @@
   />
   
   ##### ConfigController
-  <div id='id2.2.1.2
+  <div id='id2.2.1.2'
   
    O configController.php é o responsável para escrever as configurações da aplicação em um arquivo como explicado anteriormente
    ```
@@ -233,7 +233,7 @@
 />
    
    ##### HoleriteController
-   <div id='id.2.2.1.3
+   <div id='id.2.2.1.3'
    
    O HoleriteController é o responsável pela folha de pagamento, ele a principio é bem simples, ele recebe a requisição do `front-end`,  faz a busca das informações no banco de dados, igual ao exemplo do login, de acordo com o usuario e a empresa guardados na variável de sessão:```$app['session']->get('user')```, ```$app['session']->get('empresa')``` e os reenvia para o angularJS através de JSON para serem mostrados na view da aplicação em forma de divs, como no trecho de exemplo:
    ```
@@ -261,7 +261,7 @@
    />
    
    ##### CartaoController e InformeController
-   <div id='id2.2.1.4
+   <div id='id2.2.1.4'
    
    O controller do cartao e do informe tem funções bem parecidas, o que diferencia um do outro é a URL de gestão que será acessada através do comando: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, para o cartão ponto, e para o informe: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, através de webServices, e a variável `$arguments`, para cada um tambem tem seu próprio array com as informações que irão aparecer no PDF gerado:
    > Cartão
@@ -320,7 +320,7 @@
  />
  
  ##### AdminController
- <div id='id2.2.1.5
+ <div id='id2.2.1.5'
  
    Esse controller é utlizado para buscar as informações do usuario no banco para mostrar na tabela da view, e tambem para alterar os modulos conforme escolha do administrador, a uma pequena diferença no acesso ao banco, ja que o mesmo não é SQL e sim [SQLite](https://www.sqlite.org/docs.html), apesar de parecerem diferentes, os comandos se tornam parecidos mudando apenas a sintaxe:
    ```
@@ -356,7 +356,7 @@
   />
   
   ##### AtualizadorController
-  <div id='id2.2.1.6
+  <div id='id2.2.1.6'
   
    esse controllador trabalha exclusivamente com o C# e o serviço windows e fica no servidor Senior, nele temos:
    - Verificar a versão do cliente e guardar a mesma no banco SQLite
@@ -538,7 +538,7 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
 />
 
 ## Instalações
-<div id='id3
+<div id='id3'
 
 ### Front-end
 <div id='id3.1'
