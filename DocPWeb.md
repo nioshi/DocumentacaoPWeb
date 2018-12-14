@@ -47,6 +47,7 @@
  O *front-end* da aplicação foi desenvolvido utilizando o framework do google [AngularJS 1.5.8](https://code.angularjs.org/1.7.5/docs/guide) para a linguagem JavaScript e o [Bootstrap 3.3](https://getbootstrap.com/docs/3.3/) para o Html e CSS, para o *back-end* a aplicação faz uso do [PHP](http://php.net/manual/pt_BR/index.php) para manipulação do banco de dados e o framework [silex/symphony](https://silex.symfony.com/doc/2.0/) que faz a ligação entre o Angular e PHP com requisições HTTP(POST e GET).
  
  Ainda no *back-end* existe o `Serviço windows` da aplicação desenvolvido com a linguagem C#, que facilita a comunicação com serviços web com o framework .NET, o serviço PWeb é utilizado para acessar o banco de dados no servidor senior, para garantir a integridade dos dados da versão da aplicação e tambem de módulos, o mesmo faz requisição quando o computador é ligado, ou caso o computador fique ligado, o serviço acessa a cada 24 horas.
+ 
 />
 /> 
 
@@ -76,6 +77,7 @@
   - Remover um usuário.
   - Ver informações do usuário.
   - Alterar módulos de cada usuário.
+  
 />  
   
 #### AngularJS
@@ -126,8 +128,8 @@
  ```
  
  Como ja mostrado no código da configuração, a requisição HTTP é feita através de "." seguido do endereço dessa requisição no back-end que no caso da configuração é */dbconfig*, ficando: ```$http.post('./dbconfig', data, setting)```, no lado do back-end o endereço vai ser apenas */dbconfig*, a requisição pode ser POST ou GET, mas isso deve ser feito nos dois lado da aplicação, no `AngularJS` e no `PHP`, lembrando que a requisição é feita dessa forma na aplicação por causa da forma que o Silex usa as rotas, essa forma pode mudar de acordo com o framework utilizado, mais informações podem ser encontradas na documentação do [Silex 2.0](https://silex.symfony.com/doc/2.0/)
+ 
 />
-
 />
  
  ### Back-end
@@ -191,6 +193,7 @@
     $accessData = date_create_from_format("d/m/Y",$accessData);
   }
   ```
+  
   />
   
   ##### ConfigController
@@ -230,6 +233,7 @@
 		// Fecha a requisição e limpa a memória
 		curl_close($curl);
 ```
+
 />
    
    ##### HoleriteController
@@ -258,6 +262,7 @@
    $calculo['dataini'] = $calculo['dataini']->format('d/m/Y');
    $calculo['datafi'] = $calculo['datafi']->format('d/m/Y');
    ```
+   
    />
    
    ##### CartaoController e InformeController
@@ -317,6 +322,7 @@
       newWindow.open(data_blob,"_self");
  ```
  Como segue no código acima, ele recebe as informações do back-end, e os converte para pdf, e abre uma janela com o PDF gerado do relatório, tanto para o cartão tanto para o informe.
+ 
  />
  
  ##### AdminController
@@ -353,6 +359,7 @@
   > `xmlhttp.open("POST", "gravardados", true);` abre a requisição informando a forma de envio(POST), e a informação enviada.
   
   > `xmlhttp.send("x=" + usuarios);` envia a informação, com um caractere de detecção de pacote o `x=`, para o PHP saber onde começa a informação do JSON no pacote recebido.
+  
   />
   
   ##### AtualizadorController
@@ -425,6 +432,7 @@
   }
   return new Response(json_encode($retorno), 201);
   ```
+  
   />
   
  #### Serviço windows
@@ -532,6 +540,7 @@ Nesse método tambem temos o timer, o qual é utilizado para caso o computador n
             timer.Start();
 ```
 Tambem é utilizado thread para não ocorrer conflito em um evento muito raro onde vários usuários fazem requisição ao WebServer, se tiver apenas uma Thread, apenas 1 cliente por vez poderia acessar o banco de dados.
+
 />
 />
 />
@@ -551,6 +560,7 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
  <script src="js/angular.min.js"></script>
  ```
  esse código segue para os outros script javascript.
+ 
  />
  
  #### Bootstrap
@@ -579,6 +589,7 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   ```
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   ```
+  
   />
   />
   
@@ -591,6 +602,7 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
    O PHP para Windows pode ser baixado nesse [link](https://windows.php.net/download/), após baixar o .zip do mesmo, descompacta-se os arquivos em uma pasta no computador, exemplo: `C:\Program Files\php`, depois devemos colocar essa pasta em "PATH", para isso: ` botão windows + Pause Break` -> `Configurações avançadas do sistema` -> `Variáveis de ambiente`, selecione `Path` e clique em `Editar...` clique em `novo` e adicione o caminho do php, neste caso: `C:\Program Files\php`. depois é necessário reiniciar o computador para a variavel ser gravada.
    
    Pode-se ver o php entrado no prompt de comando(CMD) e digitando `php -v`.
+   
   />
   
   #### C#
@@ -614,6 +626,7 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   <div id='id3.2.3'
   
   O SQLite do PWeb utiliza o SQLiteStudio, essa IDE facilita muito a criação do banco de dados SQLite, abre-se o programa, na barra de menu seleciona-se `Database` e depois `Add a database`, seleciona-se uma pasta onde ficará o arquivo.db e pronto; Com isso ja é possivel alimentar esse banco, manualmente, ou com scripts.
+  
   />
   
   #### Silex
@@ -631,6 +644,7 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   ```
   
    > OBS: O Silex 2.0 utilizado no PWeb foi descontinuado.
+   
   />
   />
   />
@@ -649,4 +663,5 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   Agora a aplicação web está devidamente configurada, para acessar a página abra o navegador web, e digite `http://localhost/nome do diretório virtual`.
   
   > OBS: Na documentação é levado em consideração que o Banco de dados, SQL ou Oracle, ja está configurado e rodando na máquina, assim como as configurações do IIS.
+  
   />
