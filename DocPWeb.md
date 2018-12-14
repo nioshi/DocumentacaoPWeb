@@ -28,7 +28,7 @@
    - 3.2.4 [Silex](#id3.2.4)
 4. [Local de testes](#id4)
 ## **Introdução** 
-<div id='id1'
+<div id='id1'/>
 
   PWeb é uma aplicação Web desenvolvida na Senior unidade do contestado, com o intuito de facilitar a geração de relatórios cotidianos para as empresas, esses relatórios são: 
   ```
@@ -49,13 +49,12 @@
  Ainda no *back-end* existe o `Serviço windows` da aplicação desenvolvido com a linguagem C#, que facilita a comunicação com serviços web com o framework .NET, o serviço PWeb é utilizado para acessar o banco de dados no servidor senior, para garantir a integridade dos dados da versão da aplicação e tambem de módulos, o mesmo faz requisição quando o computador é ligado, ou caso o computador fique ligado, o serviço acessa a cada 24 horas.
  
 />
-/> 
 
 ## **Código-fonte**
-<div id='id2'
+<div id='id2'/>
 
 ### Front-end
-<div id='id2.1'
+<div id='id2.1'/>
 
 #### HTML
 <div id='id2.1.1'
@@ -77,12 +76,10 @@
   - Remover um usuário.
   - Ver informações do usuário.
   - Alterar módulos de cada usuário.
-  
 />  
   
 #### AngularJS
 <div id='id2.1.2'
-
 
   Como ja explicado nesse documento, o angularJS é um framework construido pela Google para facilitar a comunicação do HTML com a linguagem JavaScript, deixando o codigo HTML mais limpo e de facil entendimento.
   Começando com **config.js**, ele é utilizado para pegar as informações de configuração da view e enviar ao PHP para o mesmo escrever em um arquivo, para posteriormente utilizar essas mesmas configurações na aplicação, exemplo de código:
@@ -128,18 +125,16 @@
  ```
  
  Como ja mostrado no código da configuração, a requisição HTTP é feita através de "." seguido do endereço dessa requisição no back-end que no caso da configuração é */dbconfig*, ficando: ```$http.post('./dbconfig', data, setting)```, no lado do back-end o endereço vai ser apenas */dbconfig*, a requisição pode ser POST ou GET, mas isso deve ser feito nos dois lado da aplicação, no `AngularJS` e no `PHP`, lembrando que a requisição é feita dessa forma na aplicação por causa da forma que o Silex usa as rotas, essa forma pode mudar de acordo com o framework utilizado, mais informações podem ser encontradas na documentação do [Silex 2.0](https://silex.symfony.com/doc/2.0/)
- 
+
 />
-/>
- 
  ### Back-end
- <div id='id2.2'
+ <div id='id2.2'/>
  
   #### PHP
   <div id='id2.2.1'
   
   No back-end existe um arquivo *controller* para cada relatório, assim como para o login,para a administração e para o serviço windows.
-  
+  />
   ##### LoginController
   <div id='id2.2.1.1'
   
@@ -436,7 +431,7 @@
   />
   
  #### Serviço windows
- <div id='id2.2.2'
+ <div id='id2.2.2'/>
  
  ##### C#
  <div id='id2.2.2.1'
@@ -542,9 +537,6 @@ Nesse método tambem temos o timer, o qual é utilizado para caso o computador n
 Tambem é utilizado thread para não ocorrer conflito em um evento muito raro onde vários usuários fazem requisição ao WebServer, se tiver apenas uma Thread, apenas 1 cliente por vez poderia acessar o banco de dados.
 
 />
-/>
-/>
-/>
 
 ## Instalações
 <div id='id3'/>
@@ -593,7 +585,7 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   />
 
   ### back-end
-  <div id='id3.2'
+  <div id='id3.2'/>
   
   #### PHP
   <div id='id3.2.1'
@@ -644,10 +636,7 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   
    > OBS: O Silex 2.0 utilizado no PWeb foi descontinuado.
    
-  />
-  />
-  />
-  
+/>
   ## Local de testes
   <div id='id4'
   
