@@ -1,26 +1,22 @@
 # **Documentação do PWeb - senior**
 
 ## **Sumário**
-<ul>
-<li>
 1. [Introdução](#id1)
-<li> 1.1. [Tecnologias e linguagens utilizadas](#id1.1) </li>
-</li>
-</ul>
+ - 1.1. [Tecnologias e linguagens utilizadas](#id1.1) 
 2. [Código-fonte](#id2)
  - 2.1. [Front-end](#id2.1)
-   - 2.1.1. [HTML](#id2.1.1)
-   - 2.1.2. [AngularJS](#2.1.2)
+  - 2.1.1. [HTML](#id2.1.1)
+  - 2.1.2. [AngularJS](#2.1.2)
  - 2.2. [Back-end](#id2.2)
-    - 2.2.1 [PHP](#id2.2.1)
+   - 2.2.1 [PHP](#id2.2.1)
      - 2.2.1.1 [LoginController](#id2.2.1.1)
-      - 2.2.1.2 [ConfigController](#id2.2.1.2)
-      - 2.2.1.3 [HoleriteController](#id2.2.1.3)
-      - 2.2.1.4 [CartaoController e InformeController](#id2.2.1.4)
-    - 2.2.1.5 [AdminController](#id2.2.1.5)
-    - 2.2.1.6 [AtualizadorController](#id2.2.1.6)
+     - 2.2.1.2 [ConfigController](#id2.2.1.2)
+     - 2.2.1.3 [HoleriteController](#id2.2.1.3)
+     - 2.2.1.4 [CartaoController e InformeController](#id2.2.1.4)
+     - 2.2.1.5 [AdminController](#id2.2.1.5)
+     - 2.2.1.6 [AtualizadorController](#id2.2.1.6)
    - 2.2.2 [Serviço windows](#id2.2.2)
-    - 2.2.2.1 [C#](#id2.2.2.1)
+     - 2.2.2.1 [C#](#id2.2.2.1)
 3. [Instalações](#id3)
  - 3.1 [Front-end](#id3.1)
    - 3.1.1 [AngularJS](#id3.1.1)
@@ -85,6 +81,7 @@
 #### AngularJS
 <div id='id2.1.2'
 
+
   Como ja explicado nesse documento, o angularJS é um framework construido pela Google para facilitar a comunicação do HTML com a linguagem JavaScript, deixando o codigo HTML mais limpo e de facil entendimento.
   Começando com **config.js**, ele é utilizado para pegar as informações de configuração da view e enviar ao PHP para o mesmo escrever em um arquivo, para posteriormente utilizar essas mesmas configurações na aplicação, exemplo de código:
   ```
@@ -130,6 +127,7 @@
  
  Como ja mostrado no código da configuração, a requisição HTTP é feita através de "." seguido do endereço dessa requisição no back-end que no caso da configuração é */dbconfig*, ficando: ```$http.post('./dbconfig', data, setting)```, no lado do back-end o endereço vai ser apenas */dbconfig*, a requisição pode ser POST ou GET, mas isso deve ser feito nos dois lado da aplicação, no `AngularJS` e no `PHP`, lembrando que a requisição é feita dessa forma na aplicação por causa da forma que o Silex usa as rotas, essa forma pode mudar de acordo com o framework utilizado, mais informações podem ser encontradas na documentação do [Silex 2.0](https://silex.symfony.com/doc/2.0/)
 />
+
 />
  
  ### Back-end
