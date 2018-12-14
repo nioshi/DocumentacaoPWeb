@@ -36,7 +36,7 @@
   > Informe de rendimentos
   > Cartão ponto
   ```
-  O mesmo contem uma interface muito simples e de fácil entendimento para qualquer usuário, com um design responsívo, o PWeb tambem pode ser acessado de qualquer lugar atráves de um smartphone ou dispositivo móvel com acesso a internet atráves do aplicativo, disponibilizado na Google play.
+  O mesmo contêm uma interface muito simples e de fácil entendimento para qualquer usuário, com um design responsívo, o PWeb também pode ser acessado de qualquer lugar atráves de um smartphone ou dispositivo móvel com acesso a internet atráves do aplicativo, disponibilizado na Google play.
   
   o PWeb foi desenvolvido por:
   - Gabriel Cândido
@@ -46,7 +46,7 @@
   <div id='id1.1'
  O *front-end* da aplicação foi desenvolvido utilizando o framework do google [AngularJS 1.5.8](https://code.angularjs.org/1.7.5/docs/guide) para a linguagem JavaScript e o [Bootstrap 3.3](https://getbootstrap.com/docs/3.3/) para o Html e CSS, para o *back-end* a aplicação faz uso do [PHP](http://php.net/manual/pt_BR/index.php) para manipulação do banco de dados e o framework [silex/symphony](https://silex.symfony.com/doc/2.0/) que faz a ligação entre o Angular e PHP com requisições HTTP(POST e GET).
  
- Ainda no *back-end* existe o `Serviço windows` da aplicação desenvolvido com a linguagem C#, que facilita a comunicação com serviços web com o framework .NET, o serviço PWeb é utilizado para acessar o banco de dados no servidor senior, para garantir a integridade dos dados da versão da aplicação e tambem de módulos, o mesmo faz requisição quando o computador é ligado, ou caso o computador fique ligado, o serviço acessa a cada 24 horas.
+ Ainda no *back-end* existe o `Serviço windows` da aplicação desenvolvido com a linguagem C#, que facilita a comunicação com serviços web com o framework .NET, o serviço PWeb é utilizado para acessar o banco de dados no servidor senior, para garantir a integridade dos dados da versão da aplicação e também de módulos, o mesmo faz requisição quando o computador é ligado, ou caso o computador fique ligado, o serviço acessa a cada 24 horas.
  
 />
 
@@ -59,7 +59,7 @@
 #### HTML
 <div id='id2.1.1'
 
-  O HTML é a view da nossa aplicação, é onde é mostrado todas as informações que chegam do angularJS para gerar os relatórios, o HTML faz um submit ao AngularJS que trás as informações ao mesmo.
+  O HTML é a view da nossa aplicação, onde é mostrado todas as informações que chegam do angularJS para gerar os relatórios, o HTML faz um submit ao AngularJS que trás as informações ao mesmo.
   Exemplo de código para um botão:
   ```
   <div class="form-group">
@@ -70,7 +70,7 @@
   
   Para os relatórios, o usuário terá uma view, que o mesmo escolherá a empresa e a competência para qual deseja gerar o relátorio.
   
-  Existe tambem a view de Administrador, onde o mesmo pode:
+  Existe também a view de Administrador, onde o mesmo pode:
   
   - Adicionar um novo usuário.
   - Remover um usuário.
@@ -81,7 +81,7 @@
 #### AngularJS
 <div id='id2.1.2'
 
-  Como ja explicado nesse documento, o angularJS é um framework construido pela Google para facilitar a comunicação do HTML com a linguagem JavaScript, deixando o codigo HTML mais limpo e de facil entendimento.
+  Como já explicado nesse documento, o angularJS é um framework construido pela Google para facilitar a comunicação do HTML com a linguagem JavaScript, deixando o código HTML mais limpo e de fácil entendimento.
   Começando com **config.js**, ele é utilizado para pegar as informações de configuração da view e enviar ao PHP para o mesmo escrever em um arquivo, para posteriormente utilizar essas mesmas configurações na aplicação, exemplo de código:
   ```
       var setting = {
@@ -101,11 +101,11 @@
     });
   };
   ```
-  onde, *setting* é o formato do dado que será enviado e recebido, e o *data* é a variável que pode enviar uma informação ao back-end, nesse caso é nossas variaveis de configuração, e a mesma vai receber a resposta do *response*, essa resposta pode ser informações para serem utilizadas na view, ou apenas um "ok".
+  onde, *setting* é o formato do dado que será enviado e recebido, e o *data* é a variável que pode enviar uma informação ao back-end, nesse caso são nossas variáveis de configuração, e a mesma vai receber a resposta do *response*, essa resposta pode ser informações para serem utilizadas na view, ou apenas um "ok".
   
-  quando o *back-end* responder com sucesso, o `.success` é chamado e o mesmo seta a variavel ```$scope.PostDataResponse``` com o *data* e redireciona o usuário para a view principal através do ```$window.location.href = '/pweb'```, caso retorne um erro, o erro é mostrado na tela através do `.error`
+  quando o *back-end* responder com sucesso, o `.success` é chamado e o mesmo seta a variável ```$scope.PostDataResponse``` com o *data* e redireciona o usuário para a view principal através do ```$window.location.href = '/pweb'```, caso retorne um erro, o erro é mostrado na tela através do `.error`
   
-  ainda nesse sentido temos o **print.js** e o **salvarPDF.js** que são utilizados utilizados para imprimir ou salvar em pdf o *folha de pagamento*.
+  ainda nesse sentido temos o **print.js** e o **salvarPDF.js** que são utilizados para imprimir ou salvar em pdf o *folha de pagamento*.
   
   entrando nos *modules*, temos os arquivos .JS que cuidam da parte de requisição dos relatórios, parte administrativa e da interface do menu da aplicação. Todos seguem a mesma lógica, fazer uma requisição ao back-end(PHP), enviar os dados necessários e esperar um response com as informações que serão utilizadas para um fim.
   
@@ -124,7 +124,7 @@
     }
  ```
  
- Como ja mostrado no código da configuração, a requisição HTTP é feita através de "." seguido do endereço dessa requisição no back-end que no caso da configuração é */dbconfig*, ficando: ```$http.post('./dbconfig', data, setting)```, no lado do back-end o endereço vai ser apenas */dbconfig*, a requisição pode ser POST ou GET, mas isso deve ser feito nos dois lado da aplicação, no `AngularJS` e no `PHP`, lembrando que a requisição é feita dessa forma na aplicação por causa da forma que o Silex usa as rotas, essa forma pode mudar de acordo com o framework utilizado, mais informações podem ser encontradas na documentação do [Silex 2.0](https://silex.symfony.com/doc/2.0/)
+ Como já mostrado no código da configuração, a requisição HTTP é feita através de "." seguido do endereço dessa requisição no back-end que no caso da configuração é */dbconfig*, ficando: ```$http.post('./dbconfig', data, setting)```, no lado do back-end o endereço vai ser apenas */dbconfig*, a requisição pode ser POST ou GET, mas isso deve ser feito nos dois lado da aplicação, no `AngularJS` e no `PHP`, lembrando que a requisição é feita dessa forma na aplicação por causa da forma que o Silex usa as rotas, essa forma pode mudar de acordo com o framework utilizado, mais informações podem ser encontradas na documentação do [Silex 2.0](https://silex.symfony.com/doc/2.0/)
 
 />
  ### Back-end
@@ -138,8 +138,8 @@
   ##### LoginController
   <div id='id2.2.1.1'
   
-  no `LoginController.php`, temos as lógicas para o login do usuario, seja pela view do login padrão, ou seja pela plataforma da senior, o SeniorX, assim como *logout*, e *mudarsenha*.
-  o PHP recebe a requisição do `front-end(AngularJS)` com as informações que foi informado na view de login, e as utiliza para buscar esse usuário que está pretendendo logar na aplicação,que será mostrado logo abaixo; Todas as informações recebidas pelo front-end através da variavel `data`, são pegas através de: ```$request->get('variavelDesejada')```, sendo `variavelDesejada` o mesmo nome da variavel no angularJS.
+  no `LoginController.php`, temos as lógicas para o login do usuário, seja pela view do login padrão, ou seja pela plataforma da senior, o SeniorX, assim como *logout*, e *mudarsenha*.
+  o PHP recebe a requisição do `front-end(AngularJS)` com as informações que foi informado na view de login, e as utiliza para buscar esse usuário que está pretendendo logar na aplicação,que será mostrado logo abaixo; Todas as informações recebidas pelo front-end através da variável `data`, são obtidas através de: ```$request->get('variavelDesejada')```, sendo `variavelDesejada` o mesmo nome da variável no angularJS.
   ```
   $sql = "SELECT USU_CODUSU, USU_SENUSU, USU_ALTSEN, USU_QTDTEN, 
                  USU_BLOUSU, USU_EMPUSU
@@ -157,15 +157,15 @@
   
   $userData = $stmt->fetchAll();
   ```
-   > `$sql` é a variavel que contem a linha do sql
+   > `$sql` é a variável que contêm a linha do sql
    
-   > `$stmt = $app['db']->prepare($sql);` atribui o comando à variavel `$stmt`.
+   > `$stmt = $app['db']->prepare($sql);` atribui o comando à variável `$stmt`.
    
-   > `$stmt->bindValue(1, $user);` substitui o caracter "?" na linha do `$sql`, onde 1 é a posição do caracter e o $user, é a variavel que irá substitui-lo.
+   > `$stmt->bindValue(1, $user);` substitui o caracter "?" na linha do `$sql`, onde 1 é a posição do caracter e o $user, é a variável que irá substituí-lo.
    
-   > `$stmt->execute();` executa todos esses parametros.
+   > `$stmt->execute();` executa todos esses parâmetros.
    
-   > `$userData = $stmt->fetchAll();` recebe o retorno do SQL e o guarda em uma variável, nesse caso em específico ele recebe todos os parametros do select em um array, por causa do método ` fetchAll();`, se quisessemos apenas uma varíavel do select poderiamos utilizar-lo assim: `fetchAll()[0]['Variavel desejada']` sendo, `variavel desejada` igual ao nome que está no `$sql`.
+   > `$userData = $stmt->fetchAll();` recebe o retorno do SQL e o guarda em uma variável, nesse caso em específico ele recebe todos os parâmetros do select em um array, por causa do método ` fetchAll();`, se quisessemos apenas uma varíavel do select poderiamos utilizar-lo assim: `fetchAll()[0]['Variavel desejada']` sendo, `variavel desejada` igual ao nome que está no `$sql`.
    
    A senha quando chega é criptografada: ```$password = base64_encode($request->get('password'));```, e enviada para o banco de dados, ou seja, não tem como saber qual é a senha desse usuário, para recuperar a mesma em caso de perda, o mesmo receberá uma senha temporária e logo após logar no PWeb, deverar mudar a mesma.
    
@@ -205,9 +205,9 @@
     fclose($file);
   }
   ```
-  e tambem para receber os módulos habilitados e desabilitados da aplicação para cada usuário.
+  e também para receber os módulos habilitados e desabilitados da aplicação para cada usuário.
   
-  O C#, que será explicado mais para frente, envia uma string com informações dos módulos a um endereço URL, e o PHP, acessa esse mesmo endereço utilizando o [guzzlehttp](http://docs.guzzlephp.org/en/stable/) e recebe essa informação para utiliza-la para fazer uma condição lógica dentro dele, ele faz a comparação, guarda as informações dentro de um array de string de acordo com cada condição, e envia ao angularJS por meio de [JSON](http://www.json.org/), como pode ser visto no código simplificado:
+  O C#, que será explicado mais a frente, envia uma string com informações dos módulos a um endereço URL, e o PHP, acessa esse mesmo endereço utilizando o [guzzlehttp](http://docs.guzzlephp.org/en/stable/) e recebe essa informação para utilizá-la para fazer uma condição lógica dentro dele, ele faz a comparação, guarda as informações dentro de um array de string de acordo com cada condição, e envia ao angularJS por meio de [JSON](http://www.json.org/), como pode ser visto no código simplificado:
   ```
   	$curl = curl_init();
 	// seta a url para onde será a requisição
@@ -263,7 +263,7 @@
    ##### CartaoController e InformeController
    <div id='id2.2.1.4'
    
-   O controller do cartao e do informe tem funções bem parecidas, o que diferencia um do outro é a URL de gestão que será acessada através do comando: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, para o cartão ponto, e para o informe: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, através de webServices, e a variável `$arguments`, para cada um tambem tem seu próprio array com as informações que irão aparecer no PDF gerado:
+   O controller do cartão e do informe tem funções bem parecidas, o que diferencia um do outro é a URL de gestão que será acessada através do comando: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, para o cartão ponto, e para o informe: ```$client = new SoapClient($urlGestao . "/g5-senior-services/ronda_Synccom_senior_g5_rh_hr_relatorios?wsdl");```, através de webServices, e a variável `$arguments`, para cada um tambem tem seu próprio array com as informações que irão aparecer no PDF gerado:
    > Cartão
    
    ```
@@ -323,7 +323,7 @@
  ##### AdminController
  <div id='id2.2.1.5'
  
-   Esse controller é utlizado para buscar as informações do usuario no banco para mostrar na tabela da view, e tambem para alterar os modulos conforme escolha do administrador, a uma pequena diferença no acesso ao banco, ja que o mesmo não é SQL e sim [SQLite](https://www.sqlite.org/docs.html), apesar de parecerem diferentes, os comandos se tornam parecidos mudando apenas a sintaxe:
+   Esse controller é utlizado para buscar as informações do usuário no banco para mostrar na tabela da view, e também para alterar os módulos conforme escolha do administrador, a uma pequena diferença no acesso ao banco, ja que o mesmo não é SQL e sim [SQLite](https://www.sqlite.org/docs.html), apesar de parecerem diferentes, os comandos se tornam parecidos mudando apenas a sintaxe:
    ```
   $newdados = json_decode($_POST["x"], false);
   $db = new PDO('sqlite:C://Users//User//Documents//Projetos//pweb//Atualizador.db');
@@ -338,7 +338,7 @@
   $i = $i + 1;
   }
   ```
-  A diferença do recebimento desse código dos demais ja mostrados, é que em vez do PHP enviar JSON, ele está recebendo, assim a forma de recebimento é um pouco diferente, como é visto na linha: `$newdados = json_decode($_POST["x"], false);`, sendo o envio do angularJS tambem diferente, nesse caso:
+  A diferença do recebimento desse código dos demais já mostrados, é que em vez do PHP enviar JSON, ele está recebendo, assim a forma de recebimento é um pouco diferente, como é visto na linha: `$newdados = json_decode($_POST["x"], false);`, sendo o envio do angularJS tambem diferente, nesse caso:
   ```
   $scope.GravarDados = function(){
       usuarios = JSON.stringify($scope.usuario);
@@ -353,7 +353,7 @@
   
   > `xmlhttp.open("POST", "gravardados", true);` abre a requisição informando a forma de envio(POST), e a informação enviada.
   
-  > `xmlhttp.send("x=" + usuarios);` envia a informação, com um caractere de detecção de pacote o `x=`, para o PHP saber onde começa a informação do JSON no pacote recebido.
+  > `xmlhttp.send("x=" + usuarios);` envia a informação, com um caracter de detecção de pacote o `x=`, para o PHP saber onde começa a informação do JSON no pacote recebido.
   
   />
   
@@ -363,15 +363,15 @@
    esse controllador trabalha exclusivamente com o C# e o serviço windows e fica no servidor Senior, nele temos:
    - Verificar a versão do cliente e guardar a mesma no banco SQLite
    - Enviar o .zip com a versão nova caso esteja desatualizado
-   - Enviar os modulos do usuario para o C#
+   - Enviar os módulos do usuário para o C#
    
-   A forma de verificar a versão é bem simples, ele recebe as informações do usuario:
+   A forma de verificar a versão é bem simples, ele recebe as informações do usuário:
    ```
     $nome = $_POST['user'];
     $versao = $_POST['version'];
     $datas = $_POST['datas'];
    ```
-   Ele compara o nome do mesmo que no banco é `unique`, se ja existir ele apenas faz um `Update` para atualizar a versão e data do acesso, caso o nome não existir, ele faz um `Insert` desse novo usuário:
+   Ele compara o nome do mesmo que no banco é `unique`, se já existir ele apenas faz um `Update` para atualizar a versão e data do acesso, caso o nome não existir, ele faz um `Insert` desse novo usuário:
    ```
      // CRIA O BD DO SQLite obs: precisa ser o caminho completo
   $db = new PDO('sqlite:C://Users//User//Documents//Projetos//pweb//Atualizador.db'); 
@@ -386,7 +386,7 @@
   $retorno['versao'];
   }
   ```
-  Se a versão estiver desatualizada, o mesmo chama a rota `/baixar` o qual retorna um .zip com a versão atualizada para o C# que está no computador do cliente, o C# ja faz o trabalho de descompactar os arquivos na pasta da aplicação PWeb:
+  Se a versão estiver desatualizada, o mesmo chama a rota `/baixar` o qual retorna um .zip com a versão atualizada para o C# que está no computador do cliente, o C# já faz o trabalho de descompactar os arquivos na pasta da aplicação PWeb:
   ```
   $app->post('/baixar', function (Request $request) use ($app) {
 
@@ -402,14 +402,14 @@
   }
 });
 ```
- Atenção para as linhas `ob_clean();` e `flush();`, pois sem elas, o PHP enviará lixo de mémoria com o .zip, e quando o pacote chegar no cliente o binário do arquivo está corrompido, pois terá informações no binário que não deveria estar junto.
+ Atenção para as linhas `ob_clean();` e `flush();`, pois sem elas, o PHP enviará lixo de mémoria com o .zip, e quando o pacote chegar no cliente o binário do arquivo está corrompido, pois terá informações no binário que não deveriam estar nos binários.
 
- Lembrando que para o PHP conseguir enviar ou receber um arquivo pela rede dois parametros devem ser mudados logo no inicio do arquivo .PHP:
+ Lembrando que para o PHP conseguir enviar ou receber um arquivo pela rede dois parâmetros devem ser mudados logo no início do arquivo .PHP:
  ```
  ini_set('upload_max_filesize', '20M');
  ini_set('post_max_size', '20M');
  ```
- E ainda temos a rota do `modulose`, o qual pega os modulos contidos no banco de dados do servidor da Senior, e os envia para o serviço windows do cliente:
+ E ainda temos a rota do `modulose`, o qual pega os módulos contidos no banco de dados do servidor da Senior, e os envia para o serviço windows do cliente:
  ```
   //CRIA O BD DO SQLite obs: precisa ser o caminho completo
   $db = new PDO('sqlite:C://Users//User//Documents//Projetos//pweb//Atualizador.db'); 
@@ -440,7 +440,7 @@
    
    A comunicação com o PHP é utilizando [webClient](https://docs.microsoft.com/pt-br/dotnet/api/system.net.webclient?view=netframework-4.7.2), o qual possibilita o envio e recebimento de informações por URL.
    
-   É o C# que faz as requisições para o AtualizadorController ja explicado acima, ele envia as informações do cliente que estão em um arquivo, atraves de `NameValueCollection` para o PHP:
+   É o C# que faz as requisições para o AtualizadorController já explicado acima, ele envia as informações do cliente que estão em um arquivo, através de `NameValueCollection` para o PHP:
    ```
     NameValueCollection version = new NameValueCollection();
                 version["user"] = user[0];
@@ -465,7 +465,7 @@
       BinaryWriter binarioRecebido = new BinaryWriter(arquivoBaixado);
       binarioRecebido.Write(result);
  ```
-  no método `sendResponse` existe a variável `acessarbd` o qual controla se o C# irá buscar no banco de dados do servidor da Senior ou apenas de um arquivo no computador do cliente, para não ficar fazendo requisições desnecessárias para o banco de dados. O arquivo é alimentado quando o C# faz requisição no banco de dados 1 vez por dia.
+  no método `sendResponse` existe a variável `acessarbd` o qual controla se o C# irá buscar no banco de dados do servidor da Senior ou apenas de um arquivo no computador do cliente, para não ficar fazendo requisições desnecessárias para o banco de dados. O arquivo é alimentado quando o C# faz requisição no banco de dados uma vez por dia.
   
   > acessarbd = 0
   
@@ -522,7 +522,7 @@ para baixar o .zip segue a mesma lógica de variável, e as duas variáveis são
 
 Dentro do método `OnStart(string[] args)` é onde fica o loop do serviço, enquanto o serviço estiver rodando no computador do cliente, esse método estará sendo executado, dentro dele é escrito o LOG de start do serviço, assim como é criado o [WebServer](https://developer.mozilla.org/pt-BR/docs/Learn/Common_questions/o_que_e_um_web_server) e iniciado o mesmo: `var ws = new WebServer(SendResponse, "http://localhost:12934/mod/");`, com a função que o webServer irá utilizar, e a URL onde o mesmo irá acessar.
 
-Nesse método tambem temos o timer, o qual é utilizado para caso o computador não seja desligado, quando o mesmo estoura, as flags são resetadas, e a requisição de versão é feita, o código completo pode ser visto logo abaixo:
+Nesse método também temos o timer, o qual é utilizado para caso o computador não seja desligado, quando o mesmo estoura, as flags são resetadas, e a requisição de versão é feita, o código completo pode ser visto logo abaixo:
 ```
             var ws = new WebServer(SendResponse, "http://localhost:12934/mod/");
             ws.Run();
@@ -534,7 +534,7 @@ Nesse método tambem temos o timer, o qual é utilizado para caso o computador n
             timer.Enabled = true;
             timer.Start();
 ```
-Tambem é utilizado thread para não ocorrer conflito em um evento muito raro onde vários usuários fazem requisição ao WebServer, se tiver apenas uma Thread, apenas 1 cliente por vez poderia acessar o banco de dados.
+Também é utilizado thread para não ocorrer conflito em um evento muito raro onde vários usuários fazem requisição ao WebServer, se tiver apenas uma Thread, apenas um cliente por vez poderia acessar o banco de dados.
 
 />
 
@@ -547,7 +547,7 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
 #### AngularJS
 <div id='id3.1.1'
 
- Para utilizar o AngularJS é bem simples, deve-se entrar no site oficial do [angular](https://angularjs.org/) e fazer o download da versão desejada; o Angular redirecionará para uma página como [essa](https://code.angularjs.org/1.5.8/angular.min.js), que conterá o código-fonte para ser utilizado no projeto, deve-se copiar esse codigo-fonte e colar em um arquivo chamado `angular.min.js`, o arquivo deve ser adicionado no diretório da aplicação - uma boa prática é deixar todos os arquivos .JS em uma única pasta - para chamar o script no projeto, deve ser utilizar:
+ Para utilizar o AngularJS é bem simples, deve-se entrar no site oficial do [angular](https://angularjs.org/) e fazer o download da versão desejada; O Angular redirecionará para uma página como [essa](https://code.angularjs.org/1.5.8/angular.min.js), que conterá o código-fonte para ser utilizado no projeto, deve-se copiar esse código-fonte e colar em um arquivo chamado `angular.min.js`, o arquivo deve ser adicionado no diretório da aplicação - uma boa prática é deixar todos os arquivos .JS em uma única pasta - para chamar o script no projeto, deve ser utilizar:
  ```
  <script src="js/angular.min.js"></script>
  ```
@@ -590,9 +590,9 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   #### PHP
   <div id='id3.2.1'
   
-   O PHP para Windows pode ser baixado nesse [link](https://windows.php.net/download/), após baixar o .zip do mesmo, descompacta-se os arquivos em uma pasta no computador, exemplo: `C:\Program Files\php`, depois devemos colocar essa pasta em "PATH", para isso: ` botão windows + Pause Break` -> `Configurações avançadas do sistema` -> `Variáveis de ambiente`, selecione `Path` e clique em `Editar...` clique em `novo` e adicione o caminho do php, neste caso: `C:\Program Files\php`. depois é necessário reiniciar o computador para a variavel ser gravada.
+   O PHP para Windows pode ser baixado nesse [link](https://windows.php.net/download/), após baixar o .zip do mesmo, descompacta-se os arquivos em uma pasta no computador, exemplo: `C:\Program Files\php`, depois devemos colocar essa pasta em "PATH", para isso: ` botão windows + Pause Break` -> `Configurações avançadas do sistema` -> `Variáveis de ambiente`, selecione `Path` e clique em `Editar...` clique em `novo` e adicione o caminho do php, neste caso: `C:\Program Files\php`. depois é necessário reiniciar o computador para a variável ser gravada.
    
-   Pode-se ver o php entrado no prompt de comando(CMD) e digitando `php -v`.
+   Pode-se ver a versão do php entrado no prompt de comando(CMD) e digitando `php -v`.
    
   />
   
@@ -601,7 +601,7 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   
   Para o C# foi utilizado o visual studio IDE da Microsoft pois com ele é possivel adicionar plugins à aplicação, ele pode ser baixado nesse [link](https://visualstudio.microsoft.com/).
   
-  Com o Visual studio, podemos escolher quais pacotes de desenvolvimento queremos de acordo com nossa aplicação; No PWeb necessítamos dos seguintes pacotes de desenvolvimento:
+  Com o Visual studio, podemos escolher quais pacotes de desenvolvimento queremos de acordo com nossa aplicação; No PWeb necessitamos dos seguintes pacotes de desenvolvimento:
    - Desenvolvimento para desktop com .NET
    - ASP.NET e desenvolvimento Web
    - Processamento e armazenamentos de dados.
@@ -616,7 +616,7 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   #### SQLite
   <div id='id3.2.3'
   
-  O SQLite do PWeb utiliza o SQLiteStudio, essa IDE facilita muito a criação do banco de dados SQLite, abre-se o programa, na barra de menu seleciona-se `Database` e depois `Add a database`, seleciona-se uma pasta onde ficará o arquivo.db e pronto; Com isso ja é possivel alimentar esse banco, manualmente, ou com scripts.
+  O SQLite do PWeb utiliza o SQLiteStudio, essa IDE facilita muito a criação do banco de dados SQLite, abre-se o programa, na barra de menu seleciona-se `Database` e depois `Add a database`, seleciona-se uma pasta onde ficará o arquivo.db e pronto; Com isso ja é possível alimentar esse banco, manualmente, ou com scripts.
   
   />
   
@@ -640,9 +640,9 @@ Tambem é utilizado thread para não ocorrer conflito em um evento muito raro on
   ## Local de testes
   <div id='id4'
   
-  Os testes do PWeb são feitos na maquina local utilizando o Gerenciador de serviços da internet(IIS) do Windows.
+  Os testes do PWeb são feitos na máquina local utilizando o Gerenciador de serviços da internet(IIS) do Windows.
   
-  Com o IIS ja devidamente configurado, devemos clicar com o botão direito em `Sites > Default Web Site` e ir em `Adicionar diretório virtual`.
+  Com o IIS já devidamente configurado, devemos clicar com o botão direito em `Sites > Default Web Site` e ir em `Adicionar diretório virtual`.
   
    - O campo "alias" é o nome do diretório, o qual será usado no endereço do navegador web para acessar à aplicação.
    - O caminho físico deverá ser `..\pweb\web`, que é a pasta na qual o endereço irá acessar, ou seja a pasta da aplicação PWeb.
