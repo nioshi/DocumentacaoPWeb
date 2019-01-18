@@ -654,7 +654,7 @@ caminhoAppCompleto=\\192.168.0.156\pweb\
   
   Com algumas modificações o PWeb pode também funcionar em servidores Linux, porém, como tem parâmetros que o linux e o windows entendem de forma diferentes, as versões estão separadas, contudo, o serviço windows é híbrido, ou seja, funciona para as duas versões, podendo ter apenas uma versão.
   
-  No Servidor linux precisamos instalar o php, e a bilbioteca SQLServer, o qual pode ser feito seguindo o tutorial da própria microsoft no [link](https://docs.microsoft.com/en-us/sql/connect/php/installation-tutorial-linux-mac?view=sql-server-2017), para ver se foi instalado corretamento o plugin do SQL no PHP, podemos criar o arquivo `info.php` e verificar no mesmo.
+  No Servidor linux precisamos instalar o php, e a bilbioteca SQLServer, o qual pode ser feito seguindo o tutorial da própria microsoft no [link](https://docs.microsoft.com/en-us/sql/connect/php/installation-tutorial-linux-mac?view=sql-server-2017), para ver se foi instalado corretamente o plugin do SQL no PHP, podemos criar o arquivo `info.php` e verificar no mesmo.
   
   Para a rota do linux funcionar corretamento para à aplicação Pweb, deve-se modificar o arquivo `.htaccess`, o qual se encontra dentro da pasta do pweb, e adicionar a linha ``` rewrite / ```.
   
@@ -667,7 +667,7 @@ caminhoAppCompleto=\\192.168.0.156\pweb\
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => dirname(__DIR__) . '/web',)); ```
     
-    > OBS: Os testes da versão linux foram feitas usando PHP 7.2, ubuntu 18.04(WLS) e apache, podendo ter algumas divergências para outras versões ou distribuições. 
+  > OBS: Os testes da versão linux foram feitas usando PHP 7.2, ubuntu 18.04(WLS) e apache, podendo ter algumas divergências para outras versões ou distribuições. 
     
     
   />
