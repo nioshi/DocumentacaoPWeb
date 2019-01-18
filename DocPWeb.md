@@ -26,6 +26,8 @@
    - 3.2.2 [C#](#id3.2.2)
    - 3.2.3 [SQLite](#id3.2.3)
    - 3.2.4 [Silex](#id3.2.4)
+ - 3.3 [Versão linux](#id3.3)
+ 
 4. [Local de testes](#id4)
 ## **Introdução** 
 <div id='id1'/>
@@ -536,6 +538,16 @@ Nesse método também temos o timer, o qual é utilizado para caso o computador 
 ```
 Também é utilizado thread para não ocorrer conflito em um evento muito raro onde vários usuários fazem requisição ao WebServer, se tiver apenas uma Thread, apenas um cliente por vez poderia acessar o banco de dados.
 
+> OBS: os endereços dinâmicos no c# estão dentro do `configCaminhos.ini` o mesmo deve ter esse formato:
+```
+enderecoPweb=http://localhost:9850/pweb/modulose
+enderecoPwebv=http://localhost:9850/pweb/version
+enderecoPwebb=http://localhost:9850/pweb/baixar
+caminhoApp=\\192.168.0.156\pweb
+enderecoServico=http://localhost:12934/mod/
+caminhoAppCompleto=\\192.168.0.156\pweb\
+```
+
 />
 
 ## Instalações
@@ -637,6 +649,29 @@ Também é utilizado thread para não ocorrer conflito em um evento muito raro o
    > OBS: O Silex 2.0 utilizado no PWeb foi descontinuado.
    
 />
+  ### Versão Linux
+  <div id='id3.3'
+  
+  Com algumas modificações o PWeb pode também funcionar em servidores Linux, porém, como tem parâmetros que o linux e o windows entendem de forma diferentes, as versões estão separadas, contudo, o serviço windows é híbrido, ou seja, funciona para as duas versões, podendo ter apenas uma versão.
+  
+  No Servidor linux precisamos instalar o php, e a bilbioteca SQLServer, o qual pode ser feito seguindo o tutorial da própria microsoft no [link](https://docs.microsoft.com/en-us/sql/connect/php/installation-tutorial-linux-mac?view=sql-server-2017), para ver se foi instalado corretamento o plugin do SQL no PHP, podemos criar o arquivo `info.php` e verificar no mesmo.
+  
+  Para a rota do linux funcionar corretamento para à aplicação Pweb, deve-se modificar o arquivo `.htaccess`, o qual se encontra dentro da pasta do pweb, e adicionar a linha ``` rewrite / ```.
+  
+  Além da pasta do Pweb estar distribuida na rede, devemos dar permissão para o windows acessar a pasta da aplicação no linux, assim como suas sub-pastas e arquivos, isso pode ser feito através dos comandos ``` chmod -R 7xx 'nome-da-pasta'  chown 'nome-usuario':'nome-usuario' 'nome-da-pasta' ``` 
+  > OBS: 7xx - é o código de permissão para acesso das pastas nas distribuições linux, uso qual achar mais indicado para a situação.
+  
+  dentro do arquivo `app.php`, que pertence ao Pweb, deve-se mudar a linha ``` 
+  $app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => dirname(__DIR__) . '\web',)); ``` para -> ``` 
+    $app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => dirname(__DIR__) . '/web',)); ```
+    
+    > OBS: Os testes da versão linux foram feitas usando PHP 7.2, ubuntu 18.04(WLS) e apache, podendo ter algumas divergências para outras versões ou distribuições. 
+    
+    
+  />
+
   ## Local de testes
   <div id='id4'
   
